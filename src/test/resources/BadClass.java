@@ -1,21 +1,31 @@
 package com.github.deripas.pmd;
 
-import java.io.InputStream;
-import java.util.Optional;
-import java.util.stream.Collectors;
+import org.junit.jupiter.api.Assertions;
+import org.junit.jupiter.api.Test;
+import org.junit.jupiter.api.extension.ExtendWith;
+import org.mockito.junit.jupiter.MockitoExtension;
 
-public class BadClass {
+import java.util.concurrent.CompletableFuture;
 
-    public int Calc(int a, int b) {
-        int c = 0;
-        Optional.ofNullable("someVariable")
-            .map(this::somePrivateFunction)  // this private function
-            .stream()
-            .collect(Collectors.toList());
-        return a + b * 31;
+/**
+ * Test.
+ */
+@ExtendWith(MockitoExtension.class)
+class SomeTest {
+
+    @Test
+    void test() {
+        final BytesListener listener = createListener(
+            (bytes) -> CompletableFuture.completedFuture("HI!")
+        );
+        Assertions.assertNotNull(listener.onRecord(new byte[0]));
     }
 
-    private String somePrivateFunction(String s) {
-        return s;
+    private static BytesListener createListener(
+        BytesParser<String> parser
+    ) {
+        return bytes -> parser
+            .parse(bytes)
+            .thenAccept(System.out::println);
     }
 }
