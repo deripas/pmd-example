@@ -63,6 +63,7 @@ public class CodeQualityRenderer extends AbstractIncrementingRenderer {
         while (violations.hasNext()) {
             final RuleViolation rule = violations.next();
             final CodeQualityViolation violation = violation(rule);
+            log.info("violation {}", violation);
             jsonWriter.jsonValue(gson.toJson(violation));
         }
     }

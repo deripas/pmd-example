@@ -1,4 +1,4 @@
-package com.semrush.codequality.checkstyle;
+package checkstyle;
 
 import java.io.InputStream;
 
